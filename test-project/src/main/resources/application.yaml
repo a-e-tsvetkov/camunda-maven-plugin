@@ -1,0 +1,13 @@
+camunda.bpm:
+  admin-user:
+    id: demo
+    password: demo
+    firstName: Demo
+  filter:
+    create: All tasks
+
+logging:
+  level:
+    org.camunda.bpm: INFO
+    org.camunda.bpm.engine.bpmn.behavior: DEBUG
+    a_e_tsvetkov.camunda: DEBUG
