@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
+ xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+ xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+ xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+   id="_DdZocL47EeOQo_IRkjDF6w"
+    targetNamespace="http://camunda.org/schema/1.0/bpmn"
+     exporter="Camunda Modeler"
+  exporterVersion="5.34.0"
+      xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="DummyProcess" name="Dummy Process" isExecutable="true" camunda:historyTimeToLive="P180D">
+    <bpmn2:startEvent id="Start" name="Start">
+      <bpmn2:outgoing>Flow_03hagyx</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:endEvent id="End" name="End">
+      <bpmn2:incoming>SequenceFlow_0oy9c54</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_0oy9c54" sourceRef="Process_One" targetRef="End" />
+    <bpmn2:sequenceFlow id="Flow_03hagyx" sourceRef="Start" targetRef="Process_One" />
+    <bpmn2:serviceTask id="Process_One" name="Process 1" camunda:asyncBefore="true" camunda:asyncAfter="true" camunda:delegateExpression="${delegateProcessOne}">
+      <bpmn2:incoming>Flow_03hagyx</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_0oy9c54</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="DummyProcess">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="Start">
+        <dc:Bounds x="170" y="104" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="179" y="140" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="End">
+        <dc:Bounds x="419" y="104" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="429" y="140" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qhwayw_di" bpmnElement="Process_One">
+        <dc:Bounds x="270" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0oy9c54_di" bpmnElement="SequenceFlow_0oy9c54">
+        <di:waypoint x="370" y="122" />
+        <di:waypoint x="419" y="122" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="441.5" y="161" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03hagyx_di" bpmnElement="Flow_03hagyx">
+        <di:waypoint x="206" y="122" />
+        <di:waypoint x="270" y="122" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

@@ -1,5 +1,6 @@
 package a_e_tsvetkov.camunda.plugin.test;
 
+import gen.tst.ProcessTasks;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.HistoryService;
@@ -31,8 +32,11 @@ class WebappExampleProcessApplicationTest {
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("DummyProcess", businessKey);
 
         waitFor(processInstance, "End");
+
+        System.out.println(ProcessTasks.Process_One);
     }
 
+    @SuppressWarnings("BusyWait")
     @SneakyThrows
     private void waitFor(ProcessInstance processInstance, String taskId) {
         Instant start = Instant.now();

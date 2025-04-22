@@ -16,6 +16,7 @@
         <maven.compiler.release>17</maven.compiler.release>
 
         <scala.version>2.13.15</scala.version>
+        <maven-scala-plugin.version>2.15.2</maven-scala-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -29,6 +30,11 @@
     </dependencyManagement>
 
     <modules>
+        <module>config</module>
+        <module>bpmn-model</module>
+        <module>model-parser</module>
+        <module>code-generator</module>
+        <module>maven-plugin</module>
         <module>test-project</module>
     </modules>
 </project>
