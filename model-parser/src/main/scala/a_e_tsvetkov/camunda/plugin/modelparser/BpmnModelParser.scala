@@ -44,11 +44,6 @@ object BpmnModelParser {
     val elements = process.getFlowElements
       .asScala
       .toSeq
-    elements
-      .foreach({ x =>
-
-        println(s"id=${x.getId} class=${x.getClass.getCanonicalName}")
-      })
     val tasks = elements
       .collect({
         case x: Task => new BpmnTask(x.getId)
