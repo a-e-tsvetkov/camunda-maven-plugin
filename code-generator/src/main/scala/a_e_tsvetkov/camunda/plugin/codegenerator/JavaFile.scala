@@ -4,16 +4,29 @@ import java.io.Writer
 
 class JavaFile(writer: Writer) {
 
+  var indent = 0
+
   def line(str: String): Unit = {
-    writer.append(str).append("\n")
+    line {
+      raw(str)
+    }
   }
 
-  def line(f: () => Unit): Unit = {
-    f()
+  def line(f: => Unit): Unit = {
+    for (_ <- 0 to indent) {
+      writer.write("  ")
+    }
+    f
     writer.append("\n")
   }
 
-  private def raw(str: String) = {
+  def scope(f: => Unit): Unit = {
+    indent += 1
+    f
+    indent -= 1
+  }
+
+  private def raw(str: String): Unit = {
     writer.append(str)
   }
 
@@ -26,25 +39,34 @@ class JavaFile(writer: Writer) {
 
   private def generate(t: JEnum): Unit = {
     line(s"public enum ${t.name} {")
-    iterate(t.values, ",\n", ";\n") { v =>
-      raw(v.name)
-      if (t.values.nonEmpty) {
-        raw("(")
-        iterate(v.args, ", ", "")(generate)
-        raw(")")
+    scope {
+      val length = t.values.length - 1
+      t.values.zipWithIndex.foreach { case (v, i) =>
+        line {
+          raw(v.name)
+          if (t.values.nonEmpty) {
+            raw("(")
+            iterate(v.args, ", ")(generate)
+            raw(")")
+          }
+          raw(if (length == i) ";" else ",")
+        }
       }
-    }
-    t.fields.foreach { v =>
-      generate(v)
-    }
-    t.ctor.foreach { v =>
-      generate(t, v)
+      t.fields.foreach { v =>
+        generate(v)
+      }
+      t.methods.foreach { v =>
+        generate(v)
+      }
+      t.ctor.foreach { v =>
+        generate(t, v)
+      }
     }
     line("}")
   }
 
   private def generate(e: JField): Unit = {
-    line { () =>
+    line {
       raw("private ")
       generate(e.`type`)
       raw(" ")
@@ -54,24 +76,47 @@ class JavaFile(writer: Writer) {
   }
 
   private def generate(t: JEnum, e: JCtor): Unit = {
-    line { () =>
+    line {
       raw("private ")
       raw(t.name)
       raw("(")
-      iterate(e.params, ", ", "") { p =>
+      iterate(e.params, ", ")({ p =>
+        generate(p.`type`)
+        raw(" ")
+        raw(p.name)
+      })
+      raw(") {")
+    }
+    scope {
+      e.body.foreach(line)
+    }
+    line("}")
+  }
+
+  private def generate(m: JMethod): Unit = {
+    line {
+      raw("public ")
+      generate(m.`type`)
+      raw(" ")
+      raw(m.name)
+      raw("(")
+      iterate(m.params, ", ") { p =>
         generate(p.`type`)
         raw(" ")
         raw(p.name)
       }
       raw(") {")
     }
-    e.body.foreach(line)
+    scope {
+      m.body.foreach(line)
+    }
     line("}")
   }
 
   private def generate(t: JType): Unit = {
     t match {
       case JTypeRaw(t) => raw(t)
+      case JTypeRaw(t) => raw("void")
     }
   }
 
@@ -81,11 +126,11 @@ class JavaFile(writer: Writer) {
     }
   }
 
-  private def iterate[T](values: Seq[T], separator: String, end: String)(f: T => Unit): Unit = {
+  private def iterate[T](values: Seq[T], separator: String)(f: T => Unit): Unit = {
     val length = values.length - 1
     values.zipWithIndex.foreach { case (v, i) =>
       f(v)
-      raw(if (length == i) end else separator)
+      raw(if (length == i) "" else separator)
     }
   }
 

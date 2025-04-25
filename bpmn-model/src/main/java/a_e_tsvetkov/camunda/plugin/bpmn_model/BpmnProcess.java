@@ -12,5 +12,7 @@ public class BpmnProcess {
     File file;
     String id;
     List<BpmnTask> tasks;
+    List<BpmnEvent> events;
+    List<BpmnGateway> gateways;
 }
 

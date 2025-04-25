@@ -2,45 +2,93 @@
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_DdZocL47EeOQo_IRkjDF6w" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:process id="DummyProcess" name="Dummy Process" isExecutable="true" camunda:historyTimeToLive="P180D">
     <bpmn2:startEvent id="Start" name="Start">
-      <bpmn2:outgoing>Flow_03hagyx</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_10usm0v</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:endEvent id="End" name="End">
-      <bpmn2:incoming>SequenceFlow_0oy9c54</bpmn2:incoming>
+      <bpmn2:incoming>Flow_1ccziuw</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_0oy9c54" sourceRef="Process_One" targetRef="End" />
-    <bpmn2:sequenceFlow id="Flow_03hagyx" sourceRef="Start" targetRef="Process_One" />
+    <bpmn2:sequenceFlow id="Flow_03hagyx" sourceRef="Gateway_1_start" targetRef="Process_One" />
     <bpmn2:serviceTask id="Process_One" name="Process 1" camunda:asyncBefore="true" camunda:asyncAfter="true" camunda:delegateExpression="${delegateProcessOne}">
+      <bpmn2:extensionElements />
       <bpmn2:incoming>Flow_03hagyx</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_0oy9c54</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_01nn4u8</bpmn2:outgoing>
     </bpmn2:serviceTask>
+    <bpmn2:parallelGateway id="Gateway_1_start">
+      <bpmn2:incoming>Flow_10usm0v</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_03hagyx</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_0rs3n3p</bpmn2:outgoing>
+    </bpmn2:parallelGateway>
+    <bpmn2:sequenceFlow id="Flow_10usm0v" sourceRef="Start" targetRef="Gateway_1_start" />
+    <bpmn2:parallelGateway id="Gateway_1_end">
+      <bpmn2:incoming>Flow_01nn4u8</bpmn2:incoming>
+      <bpmn2:incoming>Flow_030hnjk</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1ccziuw</bpmn2:outgoing>
+    </bpmn2:parallelGateway>
+    <bpmn2:sequenceFlow id="Flow_01nn4u8" sourceRef="Process_One" targetRef="Gateway_1_end" />
+    <bpmn2:sequenceFlow id="Flow_1ccziuw" sourceRef="Gateway_1_end" targetRef="End" />
+    <bpmn2:userTask id="User_Task" name="User task 1" camunda:asyncBefore="true" camunda:asyncAfter="true">
+      <bpmn2:incoming>Flow_0rs3n3p</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_030hnjk</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="Flow_0rs3n3p" sourceRef="Gateway_1_start" targetRef="User_Task" />
+    <bpmn2:sequenceFlow id="Flow_030hnjk" sourceRef="User_Task" targetRef="Gateway_1_end" />
   </bpmn2:process>
+  <bpmn2:message id="Message_3q9sng2" name="test_message" />
+  <bpmn2:error id="Error_1lmc2x9" name="err_tmp" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="DummyProcess">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="Start">
-        <dc:Bounds x="170" y="104" width="36" height="36" />
+        <dc:Bounds x="170" y="174" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="179" y="140" width="24" height="14" />
+          <dc:Bounds x="179" y="210" width="24" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="End">
-        <dc:Bounds x="419" y="104" width="36" height="36" />
+        <dc:Bounds x="692" y="174" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="429" y="140" width="20" height="14" />
+          <dc:Bounds x="700" y="223" width="20" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1qhwayw_di" bpmnElement="Process_One">
-        <dc:Bounds x="270" y="82" width="100" height="80" />
+        <dc:Bounds x="340" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0oy9c54_di" bpmnElement="SequenceFlow_0oy9c54">
-        <di:waypoint x="370" y="122" />
-        <di:waypoint x="419" y="122" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="441.5" y="161" width="0" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_0uq6idp_di" bpmnElement="Gateway_1_start">
+        <dc:Bounds x="255" y="167" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0vievpw_di" bpmnElement="Gateway_1_end">
+        <dc:Bounds x="565" y="167" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cat4vf_di" bpmnElement="User_Task">
+        <dc:Bounds x="340" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_03hagyx_di" bpmnElement="Flow_03hagyx">
-        <di:waypoint x="206" y="122" />
-        <di:waypoint x="270" y="122" />
+        <di:waypoint x="280" y="167" />
+        <di:waypoint x="280" y="120" />
+        <di:waypoint x="340" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10usm0v_di" bpmnElement="Flow_10usm0v">
+        <di:waypoint x="206" y="192" />
+        <di:waypoint x="255" y="192" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01nn4u8_di" bpmnElement="Flow_01nn4u8">
+        <di:waypoint x="440" y="120" />
+        <di:waypoint x="590" y="120" />
+        <di:waypoint x="590" y="167" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ccziuw_di" bpmnElement="Flow_1ccziuw">
+        <di:waypoint x="615" y="192" />
+        <di:waypoint x="692" y="192" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rs3n3p_di" bpmnElement="Flow_0rs3n3p">
+        <di:waypoint x="280" y="217" />
+        <di:waypoint x="280" y="290" />
+        <di:waypoint x="340" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_030hnjk_di" bpmnElement="Flow_030hnjk">
+        <di:waypoint x="440" y="290" />
+        <di:waypoint x="590" y="290" />
+        <di:waypoint x="590" y="217" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

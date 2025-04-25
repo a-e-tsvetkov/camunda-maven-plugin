@@ -118,7 +118,6 @@
                 </executions>
                 <configuration>
                     <keyname>0x37A73400</keyname>
-                    <passphraseServerId>ossrh</passphraseServerId>
                 </configuration>
             </plugin>
             <plugin>

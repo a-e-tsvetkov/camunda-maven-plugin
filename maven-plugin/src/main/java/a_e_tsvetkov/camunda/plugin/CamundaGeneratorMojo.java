@@ -40,6 +40,7 @@ public class CamundaGeneratorMojo extends AbstractMojo {
 
         var config = ConfigParser.parse(configFile);
         var bpmnModel = BpmnModelParser.parse(bpmnDirectory);
+        getLog().debug("model = " + bpmnModel);
         JavaBpmnGenerator.create(outputFolder, bpmnModel, config);
         project.addCompileSourceRoot(outputFolder.getPath());
     }

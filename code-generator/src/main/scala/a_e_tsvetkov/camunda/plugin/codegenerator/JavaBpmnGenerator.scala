@@ -7,6 +7,8 @@ import java.io.File
 
 object JavaBpmnGenerator {
   def create(basedir: File, model: BpmnModel, config: Config): Unit = {
+    println("bpmnModel = " + model)
+
     val g = new JavaGenerator(basedir, BpmnTransformer(config))
     g.generate(model)
   }

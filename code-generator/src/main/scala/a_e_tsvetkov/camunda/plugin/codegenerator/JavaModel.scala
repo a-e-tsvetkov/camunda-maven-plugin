@@ -13,10 +13,13 @@ case class JEnum
   name: String,
   values: Seq[JEnumValue],
   fields: Seq[JField],
+  methods: Seq[JMethod],
   ctor: Option[JCtor]
 ) extends JRefType
 
 case class JCtor(params: Seq[JParam], body: Seq[String])
+
+case class JMethod(name: String, params: Seq[JParam], `type`: JType, body: Seq[String])
 
 case class JParam(name: String, `type`: JType)
 
@@ -27,6 +30,8 @@ case class JEnumValue(name: String, args: Seq[JExpr])
 sealed trait JType
 
 case class JTypeRaw(text: String) extends JType
+
+case object JTypeVoid extends JType
 
 sealed trait JExpr
 

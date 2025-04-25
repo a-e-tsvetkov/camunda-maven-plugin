@@ -5,7 +5,9 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.HistoryService;
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.task.Task;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +26,8 @@ class WebappExampleProcessApplicationTest {
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
+    private TaskService taskService;
+    @Autowired
     private HistoryService historyService;
 
     @Test
@@ -31,9 +35,17 @@ class WebappExampleProcessApplicationTest {
         String businessKey = UUID.randomUUID().toString();
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("DummyProcess", businessKey);
 
-        waitFor(processInstance, "End");
+        waitFor(processInstance, ProcessTasks.User_Task.getId());
 
-        System.out.println(ProcessTasks.Process_One);
+        Task task = taskService.createTaskQuery()
+                .processInstanceBusinessKey(businessKey)
+                .taskDefinitionKey(ProcessTasks.User_Task.getId())
+                .list()
+                .get(0);
+
+        taskService.complete(task.getId());
+
+        waitFor(processInstance, ProcessTasks.End.getId());
     }
 
     @SuppressWarnings("BusyWait")
