@@ -35,17 +35,17 @@ class WebappExampleProcessApplicationTest {
         String businessKey = UUID.randomUUID().toString();
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("DummyProcess", businessKey);
 
-        waitFor(processInstance, ProcessTasks.User_Task.getId());
+        waitFor(processInstance, ProcessTasks.USER_TASK.getId());
 
         Task task = taskService.createTaskQuery()
                 .processInstanceBusinessKey(businessKey)
-                .taskDefinitionKey(ProcessTasks.User_Task.getId())
+                .taskDefinitionKey(ProcessTasks.USER_TASK.getId())
                 .list()
                 .get(0);
 
         taskService.complete(task.getId());
 
-        waitFor(processInstance, ProcessTasks.End.getId());
+        waitFor(processInstance, ProcessTasks.END.getId());
     }
 
     @SuppressWarnings("BusyWait")
