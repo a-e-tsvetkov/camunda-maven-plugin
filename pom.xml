@@ -2,11 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>a_e_tsvetkov.camunda.generator</groupId>
+    <groupId>io.github.a-e-tsvetkov.camunda-generator</groupId>
     <artifactId>parent</artifactId>
     <version>0.1</version>
     <packaging>pom</packaging>
 
+    <url>https://github.com/a-e-tsvetkov/camunda-maven-plugin</url>
+    <description>Maven plugin that generate boilerplate code from camunda BPML files</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,9 +16,6 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.release>17</maven.compiler.release>
-
-        <scala.version>2.13.15</scala.version>
-        <maven-scala-plugin.version>2.15.2</maven-scala-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -48,6 +47,7 @@
 
 
     <modules>
+        <module>scala-parent</module>
         <module>config</module>
         <module>bpmn-model</module>
         <module>model-parser</module>

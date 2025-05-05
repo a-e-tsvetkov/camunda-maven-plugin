@@ -11,6 +11,9 @@ import scala.util.parsing.combinator.lexical.Scanners
 import scala.util.parsing.input.CharArrayReader.EofCh
 import scala.util.parsing.input.{CharSequenceReader, Reader}
 
+/**
+ * Facade object
+ */
 object ConfigParser {
   def parse(configFile: File): Config =
     ConfigParserInternal.parse[Config](ParseUnit(configFile))
@@ -35,6 +38,9 @@ object ParseUnit {
   }
 }
 
+/**
+ * Internal class responsible for actual parsing
+ */
 object ConfigParserInternal extends Parsers {
 
   import SToken._

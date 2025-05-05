@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>a_e_tsvetkov.camunda.generator</groupId>
+        <groupId>io.github.a-e-tsvetkov.camunda-generator</groupId>
         <artifactId>parent</artifactId>
         <version>0.1</version>
         <relativePath>../pom.xml</relativePath>
@@ -54,7 +54,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>a_e_tsvetkov.camunda.generator</groupId>
+                <groupId>io.github.a-e-tsvetkov.camunda-generator</groupId>
                 <artifactId>maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <configuration>
