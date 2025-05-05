@@ -27,7 +27,7 @@ case class BpmnTransformer(config: Config) extends JavaTransformer[BpmnModel] {
       JEnum(
         packageName = config.packageName,
         name = "ProcessTasks",
-        values = enumValues.map(x => JEnumValue(x, Seq(JExprStringLiteral(x)))),
+        values = enumValues.map(x => JEnumValue(toSnakeCase(x), Seq(JExprStringLiteral(x)))),
         fields = Seq(JField("id", idType)),
         ctor = Some(JCtor(
           params = Seq(JParam("id", idType)),
@@ -41,4 +41,6 @@ case class BpmnTransformer(config: Config) extends JavaTransformer[BpmnModel] {
         ))
     )
   }
+
+  private def toSnakeCase(x: String) = x.toUpperCase
 }
